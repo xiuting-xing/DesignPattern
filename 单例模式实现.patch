@@ -1,0 +1,197 @@
+Index: Singleton/src/main/java/com/kenstech/singleton/HungrySingleton.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Singleton/src/main/java/com/kenstech/singleton/HungrySingleton.java	(date 1626226614774)
++++ Singleton/src/main/java/com/kenstech/singleton/HungrySingleton.java	(date 1626226614774)
+@@ -0,0 +1,20 @@
++package com.kenstech.singleton;
++
++/**
++ * @Author ken_xing
++ * @Date 2021/7/14--9:31
++ * @Version 1.0
++ * @Description 恶汉模式下的几种模式
++ */
++public class HungrySingleton {
++
++    //设置一个静态私有的最终属性，并实例化当前类
++    private static final HungrySingleton instance = new HungrySingleton();
++
++    private HungrySingleton(){}
++
++    public static HungrySingleton getInstance()
++    {
++        return instance;
++    }
++}
+Index: Singleton/src/main/java/com/kenstech/singleton/LazySingleton.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Singleton/src/main/java/com/kenstech/singleton/LazySingleton.java	(date 1626249093565)
++++ Singleton/src/main/java/com/kenstech/singleton/LazySingleton.java	(date 1626249093565)
+@@ -0,0 +1,48 @@
++package com.kenstech.singleton;
++
++/**
++ * @Author ken_xing
++ * @Date 2021/7/14--9:29
++ * @Version 1.0
++ * @Description 懒汉单例模式
++ * 单例模式涉及到一个单一的类，他自己实例化自己，同时保证只有单个对象被创建。该类提供一种访问其唯一对象的方法，可以直接访问不需要实例化
++ * 因为该类中有同步锁（synchronized），所以该类是线程安全的。主要用于系统首次运行时，加载的配置和一些属性时，因为这些配置和属性在整个
++ * 生命周期中都存在，所以只需要运行一份就行。
++ */
++public class LazySingleton {
++    private static LazySingleton instance;
++
++    public LazySingleton(){}
++
++    public static LazySingleton getInstance()
++    {
++        if (instance==null)
++        {
++            instance=new LazySingleton();
++        }
++        return instance;
++    }
++
++}
++
++public class LazySingleton1{
++    private static LazySingleton1 instance;
++
++    public LazySingleton1(){}
++
++    public static LazySingleton1 getInstance()
++    {
++        if (instance==null)
++        {
++            //加入同步锁
++            synchronized (LazySingleton1.class)
++            {
++                if(instance==null)
++                {
++                    instance=new LazySingleton1();
++                }
++            }
++        }
++        return instance;
++    }
++}
+Index: Singleton/src/test/java/com/kenstech/singleton/LazySingletonTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Singleton/src/test/java/com/kenstech/singleton/LazySingletonTest.java	(date 1626229779128)
++++ Singleton/src/test/java/com/kenstech/singleton/LazySingletonTest.java	(date 1626229779128)
+@@ -0,0 +1,20 @@
++package com.kenstech.singleton;
++
++import org.junit.jupiter.api.Test;
++
++/**
++ * @Author ken_xing
++ * @Date 2021/7/14--9:47
++ * @Version 1.0
++ * @Description
++ */
++public class LazySingletonTest {
++
++    @Test
++    public void LazySingleton()
++    {
++        System.out.println(LazySingleton.getInstance());
++        System.out.println(LazySingleton.getInstance());
++    }
++
++}
+Index: Singleton/src/test/java/com/kenstech/singleton/HungrySingletonTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Singleton/src/test/java/com/kenstech/singleton/HungrySingletonTest.java	(date 1626227029510)
++++ Singleton/src/test/java/com/kenstech/singleton/HungrySingletonTest.java	(date 1626227029510)
+@@ -0,0 +1,19 @@
++package com.kenstech.singleton;
++
++import org.junit.jupiter.api.Test;
++
++/**
++ * @Author ken_xing
++ * @Date 2021/7/14--9:41
++ * @Version 1.0
++ * @Description
++ */
++public class HungrySingletonTest {
++    @Test
++    public void HungrySingleton()
++    {
++        System.out.println(HungrySingleton.getInstance());
++
++        System.out.println(HungrySingleton.getInstance());
++    }
++}
+Index: Singleton/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Singleton/pom.xml	(revision 81890f0a6a4b4626d421f9ccb37a78ed5b6922ba)
++++ Singleton/pom.xml	(date 1626226953822)
+@@ -7,6 +7,19 @@
+     <groupId>org.example</groupId>
+     <artifactId>Singleton</artifactId>
+     <version>1.0-SNAPSHOT</version>
+-
++    <dependencies>
++        <dependency>
++            <groupId>junit</groupId>
++            <artifactId>junit</artifactId>
++            <version>4.12</version>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.junit.jupiter</groupId>
++            <artifactId>junit-jupiter</artifactId>
++            <version>RELEASE</version>
++            <scope>compile</scope>
++        </dependency>
++    </dependencies>
+ 
+ </project>
+\ No newline at end of file
+Index: Singleton/Singleton.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Singleton/Singleton.iml	(revision 81890f0a6a4b4626d421f9ccb37a78ed5b6922ba)
++++ Singleton/Singleton.iml	(date 1626227029771)
+@@ -11,5 +11,20 @@
+     </content>
+     <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
++    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
++    <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
++    <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter:5.8.0-M1" level="project" />
++    <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.0-M1" level="project" />
++    <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.1" level="project" />
++    <orderEntry type="library" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
++    <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.8.0-M1" level="project" />
++    <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-params:5.8.0-M1" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.8.0-M1" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Maven: org.junit.platform:junit-platform-engine:1.8.0-M1" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.20" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.4.20" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.20" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains:annotations:13.0" level="project" />
++    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.20" level="project" />
+   </component>
+ </module>
+\ No newline at end of file
