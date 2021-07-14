@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Singleton" />
+        <module name="Observer" />
+        <module name="FactoryMethod" />
+        <module name="AbstractFactory" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="AbstractFactory" target="1.5" />
+      <module name="FactoryMethod" target="1.5" />
+      <module name="Observer" target="1.5" />
+      <module name="Singleton" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
